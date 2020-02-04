@@ -1,4 +1,5 @@
-const Box = require("../models/Box");
+/* eslint-disable class-methods-use-this */
+const Box = require('../models/Box');
 
 class BoxController {
   async store(request, response) {
@@ -11,8 +12,8 @@ class BoxController {
 
   async show(request, response) {
     const box = await Box.findById(request.params.id).populate({
-      path: "files",
-      options: { sort: { updatedAt: -1 } }
+      path: 'files',
+      options: { sort: { updatedAt: -1 } },
     });
 
     return response.json(box);

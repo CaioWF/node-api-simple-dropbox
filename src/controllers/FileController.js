@@ -1,5 +1,6 @@
-const Box = require("../models/Box");
-const File = require("../models/File");
+/* eslint-disable class-methods-use-this */
+const Box = require('../models/Box');
+const File = require('../models/File');
 
 class FileController {
   async store(request, response) {
@@ -7,14 +8,15 @@ class FileController {
 
     const file = await File.create({
       title: request.file.originalname,
-      path: request.file.filename
+      path: request.file.filename,
     });
 
     box.files.push(file);
 
     await box.save();
 
-    request.io.sockets.in(box._id).emit("file", file);
+    // eslint-disable-next-line no-underscore-dangle
+    request.io.sockets.in(box._id).emit('file', file);
 
     return response.json(file);
   }
